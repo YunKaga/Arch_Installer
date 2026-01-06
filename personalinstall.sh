@@ -28,7 +28,6 @@ echo "Введите имя пользователя: "
 read username
 useradd -m $username
 usermod -aG wheel,audio,video,storage $username
-userDir="/home/$username"
 
 # passwd
 echo "Введите пароль $username"
@@ -58,21 +57,7 @@ get_btr() {
 }
 get_btr
 
-
-chsh -s /bin/zsh $username
-
 systemctl enable NetworkManager
-systemctl enable sddm
-
-# Конфиги
-mkdir $userDir/gitclone
-cd $userDir/gitclone
-git clone https://github.com/YunKaga/YunKagaConfigHypr
-cd ./YunKagaConfigHypr
-mkdir /home/$username/.config
-rm -r ./README.md ./pockets.txt ./preview
-mv ./* /home/$username/.config/
-cd /
 
 # Grub
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
