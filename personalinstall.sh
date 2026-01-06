@@ -13,10 +13,16 @@ locale-gen
 echo "LANG=\"ru_RU.UTF-8\"" >> /etc/locale.conf
 
 # Хост
-echo "IT-Pechka" >> /etc/hostname
-echo "127.0.1.1    IT-Pechka.localdomain     IT-Pechka" >> /etc/hosts
+nameofhost=""
+echo "Введите имя системы"
+read nameofhost
+echo "$nameofhost" >> /etc/hostname
+echo "127.0.1.1    $nameofhost.localdomain     $nameofhost" >> /etc/hosts
 
 # Пользователь
+echo "Введите пароль root"
+passwd
+
 username=""
 echo "Введите имя пользователя: "
 read username
@@ -25,15 +31,15 @@ usermod -aG wheel,audio,video,storage $username
 userDir="/home/$username"
 
 # passwd
-echo "Введите пароль root"
-passwd
 echo "Введите пароль $username"
 passwd $username
 
 # Пакеты
 pacman -S reflector
 reflector -c Russia -l 20 --sort rate --save /etc/pacman.d/mirrorlist
-sed -i "s/ParallelDownloads = 5/ParallelDownloads = 15" /etc/pacman.conf
+
+sed -i "s/ParallelDownloads = 5/ParallelDownloads = 15/" /etc/pacman.conf
+
 pockets_base="hyprland waybar hyprpaper hypridle hyprlock hyprpicker grim slurp mako networkmanager blueman bluez brightnessctl pipewire wireplumber zsh kitty cmake telegram-desktop firefox wofi thunar ttf-jetbrains-mono-nerd libreoffice-still-ru bashtop fastfetch curl nodejs yarn sddm grub efibootmgr tree-sitter-cli eza duf "
 pockets_btrfs="grub-btrfs btrfs-progs timeshift"
 
