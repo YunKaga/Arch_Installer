@@ -7,8 +7,8 @@ ln -sf /usr/share/zoneinfo/Asia/Tomsk /etc/localtime
 hwclock --systohc
 
 # Локали
-sed -i "171s/.//" /etc/locale.gen # en_US.UTF-8
-sed -i "402s/.//" /etc/locale.gen # ru_RU.UTF-8
+sed -i "172s/.//" /etc/locale.gen # en_US.UTF-8
+sed -i "403s/.//" /etc/locale.gen # ru_RU.UTF-8
 locale-gen
 echo "LANG=\"ru_RU.UTF-8\"" >> /etc/locale.conf
 
@@ -34,7 +34,7 @@ passwd $username
 
 # Пакеты
 pacman -Sy reflector
-reflector -c Russia -l 20 --sort rate --save /etc/pacman.d/mirrorlist
+reflector --protocol https --country Russia --ipv4 --fastest 10 --sort score --save /etc/pacman.d/mirrorlist
 
 sed -i "s/ParallelDownloads = 5/ParallelDownloads = 15/" /etc/pacman.conf
 
